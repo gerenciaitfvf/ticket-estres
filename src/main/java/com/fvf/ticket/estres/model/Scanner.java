@@ -50,11 +50,12 @@ public class Scanner implements Runnable {
             
             long startProcess = Calendar.getInstance().getTimeInMillis();
             
-            this.ticketPath = this.webTarget.path("tickets/" + ticket + "/consume/");
+            this.ticketPath = this.webTarget.path("circus/disp/validacaoAcesso");
             
             Invocation.Builder invocationBuilder = this.ticketPath.request(MediaType.APPLICATION_JSON);
         
             JSONObject body = new JSONObject();
+            body.put("codigo", ticket);
             
             Response response = invocationBuilder
                     .header("Authorization", "Bearer " + this.getBearerToken())
@@ -98,7 +99,7 @@ public class Scanner implements Runnable {
     public void initConnection() {
 
         this.client = ClientBuilder.newClient();
-        this.webTarget = client.target("https://get.ticketplate.com/scanner-api");
+        this.webTarget = client.target("https://fvfadmin.eleventickets.com");
         
     } 
     
@@ -132,6 +133,7 @@ public class Scanner implements Runnable {
         for (String key: this.tickets.keySet()) {
         
             this.checkTicket(key, sleepmilis);
+            System.out.println("Scanner id: " + this.getId() + " ticket : " + key);
             sleepmilis = (long) (Math.random()*(12000-1000))+1000;
             
         }

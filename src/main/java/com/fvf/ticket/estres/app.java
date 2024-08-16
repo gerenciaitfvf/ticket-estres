@@ -30,17 +30,17 @@ public class app {
             pathTicketsFile = args[1];
         }
         
-        String deviceQuantity = "2";
+        String deviceQuantity = "67";
         if (args.length > 2) {
             deviceQuantity = args[2];
         }
         
-        String bearerUsername = "pruebasfvf@ticketplate.com";
+        String bearerUsername = "fvf_federacao";
         if (args.length > 3) {
             bearerUsername = args[3];
         }
         
-        String bearerPassword = "fvf123456";
+        String bearerPassword = "h65rdt2ap7f29c065mdnpeudw9dl8adn";
         if (args.length > 4) {
             bearerPassword = args[4];
         }
@@ -68,6 +68,8 @@ public class app {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        
+        System.out.println("Termine de ejecutar el app");
 
     }
 

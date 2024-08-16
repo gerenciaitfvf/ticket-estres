@@ -41,7 +41,9 @@ public class EstresController {
             auth.initConnection();
             String bearerResponse = auth.getBearerToken(username, password);
 
-            this.bearerToken = (new JSONObject(bearerResponse)).getString("token");
+            
+            
+            this.bearerToken = (new JSONObject(bearerResponse)).getJSONArray("result").getString(1);
             
             // for general purpose
             ExcelResults.getInstance().putParameter("bearerToken", this.bearerToken);
