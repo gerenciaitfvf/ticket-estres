@@ -20,17 +20,17 @@ public class app {
     public static void main(String[] args) {
         // TODO code application logic here
 
-        String pathTicketsFile = "/Users/franciscogomezlopez/Downloads/Tickets-prueba.xlsx";
+        String pathTicketsFile = "/Users/franciscogomezlopez/Downloads/Tickets-prueba-imply-8.xlsx";
         if (args.length > 0) {
             pathTicketsFile = args[0];
         }
         
-        String pathResultFile = "/Users/franciscogomezlopez/Downloads/ticket-resultados.xlsx";
+        String pathResultFile = "/Users/franciscogomezlopez/Downloads/ticket-resultados-imply-8k.xlsx";
         if (args.length > 1) {
             pathTicketsFile = args[1];
         }
         
-        String deviceQuantity = "67";
+        String deviceQuantity = "24";
         if (args.length > 2) {
             deviceQuantity = args[2];
         }

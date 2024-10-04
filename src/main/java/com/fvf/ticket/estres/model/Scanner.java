@@ -17,6 +17,7 @@ import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
 /**
@@ -41,14 +42,15 @@ public class Scanner implements Runnable {
         
         
         JSONObject actualticket = this.tickets.get(ticket);
-        
+        Response response = null;
+        long startProcess = 0l;
         try {
             
             if(sleepmilis > 0){
                 Thread.sleep(sleepmilis);
             }
             
-            long startProcess = Calendar.getInstance().getTimeInMillis();
+            startProcess = Calendar.getInstance().getTimeInMillis();
             
             this.ticketPath = this.webTarget.path("circus/disp/validacaoAcesso");
             
@@ -57,26 +59,37 @@ public class Scanner implements Runnable {
             JSONObject body = new JSONObject();
             body.put("codigo", ticket);
             
-            Response response = invocationBuilder
+            response = invocationBuilder
                     .header("Authorization", "Bearer " + this.getBearerToken())
                     .post(Entity.json(body.toString()));
             
-            long longTimeFinish = Calendar.getInstance().getTimeInMillis() - startProcess;
             
-            actualticket.put("time_send", startProcess);
-            actualticket.put("time_response", longTimeFinish);
-            actualticket.put("status_response", response.getStatus());
-            actualticket.put("time_sleep", sleepmilis);
-            actualticket.put("device", this.id);
-            
-            // update response
-            this.tickets.put(ticket, actualticket);
            
         } catch (Exception e) {
             System.out.println("error sending ticket : " + ticket);
             e.printStackTrace();
             
         }
+        
+        long longTimeFinish = Calendar.getInstance().getTimeInMillis() - startProcess;
+        
+        try {
+            
+            actualticket.put("time_send", startProcess);
+            actualticket.put("time_response", longTimeFinish);
+            actualticket.put("status_response", response != null ? response.getStatus() : 700);
+            actualticket.put("time_sleep", sleepmilis);
+            actualticket.put("device", this.id);
+            
+        } catch (JSONException e) {
+            
+            System.out.println("error sending json ticket : " + ticket);
+            e.printStackTrace();
+            
+        }
+            
+        // update response
+        this.tickets.put(ticket, actualticket);
         
     }
 
